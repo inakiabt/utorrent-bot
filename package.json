@@ -1,0 +1,23 @@
+{
+  "name": "utorrent-bot",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon lib/index.js --exec babel-node",
+    "serve": "node dist/index.js",
+    "build": "babel lib -d dist"
+  },
+  "dependencies": {
+    "botkit": "^0.5.1",
+    "library-utorrent": "^1.1.0",
+    "moment": "^2.17.1"
+  },
+  "devDependencies": {
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.2.1",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-latest": "^6.22.0",
+    "babel-preset-stage-2": "^6.22.0"
+  }
+}
