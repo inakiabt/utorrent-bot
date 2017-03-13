@@ -104,7 +104,7 @@ var list = function list(result) {
   return {
     "attachments": result.map(function (item) {
       return {
-        "fallback": "Torrents list",
+        "fallback": "Torrents list:",
         "color": statusColor(item.status),
         "author_name": item.status + ' (' + progress(item) + '%)',
         "title": item.name,
@@ -144,9 +144,32 @@ var error = function error(err) {
   };
 };
 
+var files = function files(result) {
+  return {
+    "attachments": result.map(function (item) {
+      return {
+        "fallback": "Torrent files:",
+        "color": statusColor(item.fileSize > item.downloadedSize ? 'downloading' : 'finished'),
+        "author_name": item.fileName,
+        // "text": `:slack: ${item.hash.toLowerCase().substring(0, 8)}`
+        "fields": [{
+          "title": "Size",
+          "value": humanFileSize(item.fileSize),
+          "short": true
+        }, {
+          "title": "Downloaded",
+          "value": humanFileSize(item.downloadedSize),
+          "short": true
+        }]
+      };
+    }).slice(0, 50)
+  };
+};
+
 var commandsMap = {
   error: error,
   list: list,
+  files: files,
   details: details,
   start: list,
   stop: list,
