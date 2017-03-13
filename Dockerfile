@@ -6,6 +6,7 @@ RUN apk update && apk upgrade && \
 
 RUN mkdir -p /opt/app
 WORKDIR /opt/app
+
 ENV UTORRENT_HOST= \
     UTORRENT_PORT= \
     UTORRENT_USERNAME= \
