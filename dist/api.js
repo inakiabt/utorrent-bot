@@ -130,7 +130,6 @@ var commands = exports.commands = {
   add: {
     description: 'Add torrent by url',
     fn: 'addTorrentUrl',
-    postAction: postAction,
     params: {
       torrentUrl: {
         description: 'Torrent url. It could be a magnet url or .torrent url',
