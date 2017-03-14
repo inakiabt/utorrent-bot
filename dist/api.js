@@ -48,8 +48,8 @@ var matchHash = function matchHash(client, config, params) {
 };
 
 var postAction = function postAction(client, config, params, processedResult) {
-  return request(client, 'details', config, params).then(function (result) {
-    return processResult('details', result, params);
+  return request(client, 'details', config, {}).then(function (result) {
+    return processResult('details', result, {});
   });
 };
 
@@ -116,6 +116,7 @@ var validateInput = function validateInput(command, input) {
 
 var commands = exports.commands = {
   list: {
+    alias: ['ls'],
     description: 'List of all torrents',
     fn: 'listTorrents',
     processOutput: list,
@@ -139,6 +140,7 @@ var commands = exports.commands = {
     }
   },
   remove: {
+    alias: ['rm'],
     description: 'Remove torrent by hash',
     fn: 'removeTorrent',
     processInput: matchHash,
@@ -151,6 +153,7 @@ var commands = exports.commands = {
     }
   },
   details: {
+    alias: ['d'],
     description: 'Get torrent details by hash',
     processOutput: details,
     fn: 'listTorrents',

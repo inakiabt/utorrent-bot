@@ -117,10 +117,22 @@ controller.spawn({
   }
 });
 
+var commandsList = {};
+
 Object.keys(_api.commands).forEach(function (command) {
+  commandsList[command] = command;
+  if (_api.commands[command].hasOwnProperty('alias')) {
+    _api.commands[command].alias.forEach(function (alias) {
+      return commandsList[alias] = command;
+    });
+  }
+});
+
+console.log(commandsList);
+Object.keys(commandsList).forEach(function (command) {
   controller.hears(['^' + command + '$', '^' + command + ' (.*)'], ['direct_message', 'direct_mention', 'mention'], function (bot, message) {
-    api(command, message.match[1]).then(function (result) {
-      return bot.reply(message, (0, _messages2.default)(command, result));
+    api(commandsList[command], message.match[1]).then(function (result) {
+      return bot.reply(message, (0, _messages2.default)(commandsList[command], result));
     }).catch(function (err) {
       console.error(err, '<--');
       bot.reply(message, (0, _messages2.default)('error', err));
