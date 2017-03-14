@@ -126,9 +126,15 @@ var paramsDescription = function paramsDescription(params) {
   }).join('\n');
 };
 
+var showAliases = function showAliases(aliases) {
+  return '\n    Alias: ' + aliases.map(function (alias) {
+    return '*' + alias + '*';
+  }).join(', ');
+};
+
 var help = function help(_) {
   return Object.keys(_api.commands).map(function (command) {
-    return '*' + command + '* ' + showParams(_api.commands[command].params) + '\n    _' + _api.commands[command].description + '_\n    Arguments:\n' + paramsDescription(_api.commands[command].params) + '\n';
+    return '*' + command + '* ' + showParams(_api.commands[command].params) + '\n    _' + _api.commands[command].description + '_' + (_api.commands[command].hasOwnProperty('alias') ? showAliases(_api.commands[command].alias) : '') + '\n    Arguments:\n' + paramsDescription(_api.commands[command].params) + '\n';
   }).join('\n');
 };
 
@@ -166,6 +172,8 @@ var files = function files(result) {
   };
 };
 
+var helpMessage = help();
+
 var commandsMap = {
   error: error,
   list: list,
@@ -173,7 +181,9 @@ var commandsMap = {
   details: details,
   start: list,
   stop: list,
-  help: help
+  help: function help(_) {
+    return helpMessage;
+  }
 };
 var messages = function messages(command, result) {
   if (!commandsMap.hasOwnProperty(command)) {
